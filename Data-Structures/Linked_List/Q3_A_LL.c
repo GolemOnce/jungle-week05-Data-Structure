@@ -8,7 +8,7 @@ Purpose: Implementing the required functions for Question 3 */
 
 #include <stdio.h>
 #include <stdlib.h>
-//ddddd
+
 //////////////////////////////////////////////////////////////////////////////////
 
 typedef struct _listnode

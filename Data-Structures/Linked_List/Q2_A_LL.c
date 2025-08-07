@@ -103,8 +103,62 @@ int main()
 
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 {
-    /* add your code here */
+
+	ListNode *nodetoMove, *prevNode, *temp_pre;
+	int init_size = ll1->size;
+	
+	if (ll1->head == NULL || ll2->head == NULL)
+		return ;
+	
+	prevNode = ll1->head;
+	nodetoMove = ll2->head;
+
+	while(ll1->size < (init_size * 2) && ll2->size != 0 ){
+		ll2->head = nodetoMove->next;
+		temp_pre = prevNode->next;
+		prevNode->next = nodetoMove;
+		nodetoMove->next = temp_pre;
+		ll1->size++;
+		ll2->size--;
+		prevNode = temp_pre;
+		nodetoMove = ll2->head;
+	}
+	
 }
+
+// GPT 코드
+// void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2) {
+//     if (!ll1->head || !ll2->head) return;
+
+//     ListNode *p1 = ll1->head;
+//     ListNode *p2 = ll2->head;
+//     ListNode *next1, *next2;
+
+//     int originalSize1 = ll1->size;
+//     int mergedCount = 0;
+
+//     // ll1과 ll2가 모두 노드를 가질 동안 한 노드씩 번갈아 삽입
+//     while (p1 && p2) {
+//         next1 = p1->next;   // ll1의 다음 노드
+//         next2 = p2->next;   // ll2의 다음 노드
+
+//         // ll2의 p2를 ll1의 p1 뒤에 삽입
+//         p1->next = p2;
+//         p2->next = next1;
+
+//         // 포인터 이동
+//         p1 = next1;
+//         p2 = next2;
+//         mergedCount++;
+//     }
+
+//     // ll2의 head는 남은 p2로 갱신
+//     ll2->head = p2;
+
+//     // 사이즈 업데이트
+//     ll1->size = originalSize1 + mergedCount;
+//     ll2->size -= mergedCount;
+// }
 
 ///////////////////////////////////////////////////////////////////////////////////
 
