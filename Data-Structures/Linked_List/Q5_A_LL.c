@@ -105,34 +105,90 @@ void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, Linke
 	ListNode *front;
 	ListNode *back;
 	ListNode *cur = ll->head;
-	int move_count = 0;
-	
-	if (ll == NULL)
-		return;
-	
+	if (!ll || !front || !back) return;
+	if (!ll->head) return;
+
 	resultFrontList->head = cur;
 	cur = cur->next;
-	ll->head = cur;
 	front = resultFrontList->head;
 	front->next = NULL;
 	resultFrontList->size++;
 	ll->size--;
-	
-	while (resultFrontList->size < ll->size)
-	{	
-		
-		cur = 
+
+	while (ll->size > resultFrontList->size)
+	{
+		ll->head = cur->next;
+		front->next = cur;
+		cur->next = NULL;
+		cur = ll->head;
 		front = front->next;
 		resultFrontList->size++;
 		ll->size--;
 	}
-
-	while (ll->size > 0)
+	
+	resultBackList->head = cur;
+	cur = cur->next;
+	back = resultBackList->head;
+	back->next = NULL;
+	resultBackList->size++;
+	ll->size--;
+	while ( ll->size > 0 )
 	{
-
+		ll->head = cur->next;
+		back->next = cur;
+		cur->next = NULL;
+		cur = ll->head;
+		back = back->next;
 		resultBackList->size++;
 		ll->size--;
 	}
+}
+
+// GPT
+void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
+{
+    if (!ll || !resultFrontList || !resultBackList) return;
+
+    // 빈 리스트
+    if (!ll->head) return;
+
+    // 노드 1개
+    if (!ll->head->next) {
+        resultFrontList->head = ll->head;
+        resultFrontList->size = 1;
+        ll->head = NULL;
+        ll->size = 0;
+        return;
+    }
+
+    // slow/fast로 중간 지점 찾기(앞쪽이 더 많도록)
+    ListNode *slow = ll->head;
+    ListNode *fast = ll->head->next;
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    // split
+    resultFrontList->head = ll->head;
+    resultBackList->head  = slow->next;
+    slow->next  = NULL;
+
+    // size 갱신(있다면)
+    if (ll->size > 0) {
+        resultFrontList->size = (ll->size + 1) / 2;
+        resultBackList->size  = ll->size / 2;
+    } else {
+        // ll->size를 안 믿는다면 여기서 세면서 채워도 됨
+        int f=0, b=0;
+        for (ListNode *p=resultFrontList->head; p; p=p->next) f++;
+        for (ListNode *p=resultBackList->head;  p; p=p->next) b++;
+        resultFrontList->size = f; resultBackList->size = b;
+    }
+
+    // 원본은 비워둔다(파괴적 split)
+    ll->head = NULL;
+    ll->size = 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

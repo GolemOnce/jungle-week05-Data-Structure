@@ -113,7 +113,7 @@ void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 	prevNode = ll1->head;
 	nodetoMove = ll2->head;
 
-	while(ll1->size < (init_size * 2) && ll2->size != 0 ){
+	while ( ll1->size < (init_size * 2) && ll2->size != 0 ){
 		ll2->head = nodetoMove->next;
 		temp_pre = prevNode->next;
 		prevNode->next = nodetoMove;

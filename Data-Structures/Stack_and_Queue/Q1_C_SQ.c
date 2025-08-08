@@ -114,14 +114,46 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void createQueueFromLinkedList(LinkedList *ll, Queue *q)
-{
-	/* add your code here */
+void createQueueFromLinkedList(LinkedList *ll, Queue *q) {
+    // q->ll = ll; //shallow copy
+	
+	q->ll.head = NULL; 
+	q->ll.size = 0;
+    ListNode *tail = NULL;
+    for (ListNode *p = ll->head; p; p = p->next) {
+        ListNode *n = malloc(sizeof *n);
+        n->item = p->item;
+        n->next = NULL;
+        if (!q->ll.head) q->ll.head = n;
+        else             tail->next = n;
+        tail = n;
+        q->ll.size++;
+    }//deepcopy
+	
+
 }
 
 void removeOddValues(Queue *q)
 {
-	/* add your code here */
+	if(!q || !q->ll.head) return;
+	ListNode *cur = q->ll.head;;
+	ListNode *prev = NULL;
+	
+    while (cur) {
+        if (cur->item & 1) {
+            ListNode *del = cur;
+            if (prev)
+				prev->next = cur->next;
+            else
+				q->ll.head = cur->next;
+            cur = cur->next;
+            free(del);
+            q->ll.size--;
+        } else {
+            prev = cur;
+            cur = cur->next;
+        }
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////////
