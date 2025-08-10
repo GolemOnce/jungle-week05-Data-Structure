@@ -106,11 +106,32 @@ int isStackPairwiseConsecutive(Stack *s)
 	if (!s || !s->ll.head) return 0;
 	if (s->ll.size & 1) return 0;
 
-	ListNode *compare1 = pop(s);
-	ListNode *compare2 = pop(s);
+	// ListNode *compare1;
+	// ListNode *compare2;
 
+	// while(s->ll.size > 0) {
+	// 	compare1 = s->ll.head;
+	// 	s->ll.head = compare1->next;
+	// 	s->ll.size--;
 
-	
+	// 	compare2 = s->ll.head;
+	// 	s->ll.head = compare2->next;
+	// 	s->ll.size--;
+
+	// 	if (compare1->item - compare2->item == 1 || compare1->item - compare2->item == -1 );
+	// 	else return 0;
+	// 	free(compare1);
+	// 	free(compare2);
+	// };
+	// return 1;
+	int compare1, compare2;
+	while(s->ll.size > 0){
+		compare1 = pop(s);
+		compare2 = pop(s);
+		if ( compare1 - compare2 == 1 || compare1 - compare2 == -1 );
+		else return 0;
+	}
+	return 1;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

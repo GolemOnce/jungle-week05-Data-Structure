@@ -105,8 +105,46 @@ int main()
 
 void printSmallerValues(BTNode *node, int m)
 {
-	/* add your code here */
+// // 재귀딸깍
+//     if (!node) return;
+//     if (node->item < m){
+//         printf("%d ",node->item);
+//     }
+// 	   printSmallerValues(node->left, m);
+//     printSmallerValues(node->right, m);
+
+// 반복문 사용 (스택)
+    if (!node) return;
+
+    Stack temp;
+    temp.top = NULL;
+
+    push(&temp, node);
+    BTNode *cur;
+
+    while ((cur = pop(&temp)) != NULL) {
+        if(cur->item < m)  printf("%d ",cur->item);
+        if (cur->right) push(&temp, cur->right);
+        if (cur->left) push(&temp, cur->left);
+    }
+
+// // BST에서 사용하게 될 수도 있을 코드 (재귀)
+// void printSmallerValuesBST(BTNode *node, int m){
+//     if (!node) return;
+//     if (node->item >= m) {
+//         // 오른쪽은 전부 m 이상이니 볼 필요 없음
+//         printSmallerValuesBST(node->left, m);
+//     } else {
+//         // node < m 이므로 출력하고 양쪽 모두 가능
+//         printf("%d ", node->item);
+//         printSmallerValuesBST(node->left, m);
+//         printSmallerValuesBST(node->right, m);
+//     }
+// }
+
 }
+
+
 
 //////////////////////////////////////////////////////////////////////////////////
 

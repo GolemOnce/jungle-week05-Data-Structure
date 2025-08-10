@@ -102,7 +102,29 @@ int main()
 
 int smallestValue(BTNode *node)
 {
-	/* add your code here */
+//  // 스택 (반복문)	
+
+//     if (!node) return 0;
+//     Stack temp;
+//     temp.top = NULL;
+
+//     push(&temp, node);
+//     BTNode *cur;
+//     int min = node->item;
+//     while ((cur = pop(&temp)) != NULL) {
+//         if(cur->item < min)  min = cur->item;
+//         if (cur->right) push(&temp, cur->right);
+//         if (cur->left) push(&temp, cur->left);
+//     }
+//     return min;
+    int min;
+    if (node){
+        if (node->item < min) return node->item;
+        
+        min = smallestValue(node->left);
+        min = smallestValue(node->right);
+        return min;
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////////

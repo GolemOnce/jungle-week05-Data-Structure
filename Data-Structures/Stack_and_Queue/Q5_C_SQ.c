@@ -70,6 +70,7 @@ int main()
 	printf("0: Quit:\n");
 
 
+
 	while (c != 0)
 	{
 		printf("Please input your choice(1/2/0): ");
@@ -109,7 +110,10 @@ int main()
 
 void recursiveReverse(Queue *q)
 {
-/* add your code here */
+	if (!q || !q->ll.head) return;
+	int temp = dequeue(q);
+	recursiveReverse(q);
+	enqueue(q, temp);
 }
 
 //////////////////////////////////////////////////////////////////

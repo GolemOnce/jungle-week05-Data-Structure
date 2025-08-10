@@ -115,7 +115,7 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 void createQueueFromLinkedList(LinkedList *ll, Queue *q) {
-    // q->ll = ll; //shallow copy
+    // q->ll = ll; // shallow copy
 	
 	q->ll.head = NULL; 
 	q->ll.size = 0;
@@ -136,8 +136,9 @@ void createQueueFromLinkedList(LinkedList *ll, Queue *q) {
 void removeOddValues(Queue *q)
 {
 	if(!q || !q->ll.head) return;
-	ListNode *cur = q->ll.head;;
+	ListNode *cur = q->ll.head;
 	ListNode *prev = NULL;
+	
 	
     while (cur) {
         if (cur->item & 1) {
