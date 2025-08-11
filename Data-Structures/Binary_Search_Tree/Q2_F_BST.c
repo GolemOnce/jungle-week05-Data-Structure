@@ -87,11 +87,47 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+//Push, pop만 사용하기
 void inOrderTraversal(BSTNode *root)
 {
-	 /* add your code here */
+    Stack s;
+    s.top = NULL;
+
+    // // 필요하다면 시작 시 스택 비우기(여기선 지역 스택이라 의미상 넣어둠)
+    // while (pop(&s) != NULL) { }   // pop은 비었으면 NULL 반환
+
+	//첨엔 입력받은 root 그대로 사용하려고 했는데, 원본 값이 변경되기 때문에 재사용성을 고려해 포인터 만들어서 사용
+    BSTNode *cur = root;
+
+    while (cur != NULL || !isEmpty(&s)) {   //isEmpty(&s)대신 s.top 사용은 가능하지만 &s, &s.top같이 주소 값으로 찾으면 항상 참이 된다.
+        while (cur != NULL) {
+            push(&s, cur);
+            cur = cur->left;
+        }
+        cur = pop(&s);
+
+        printf("%d ", cur->item);
+		 
+        cur = cur->right;
+    }
 }
+
+// 전위코드 재사용 실패
+void inOrderIterative(BSTNode *root)
+{
+    Stack s;
+	s.top = NULL;
+    if (!root) return;
+
+    push(&s, root);
+    while (!isEmpty(&s)) {
+        BSTNode *node = pop(&s);
+        if (node->right) push(&s, node->right); // 나중에 방문
+        printf("%d ", node->item);
+        if (node->left)  push(&s, node->left);  // 먼저 방문
+    }
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 

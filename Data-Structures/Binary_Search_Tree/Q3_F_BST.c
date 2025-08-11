@@ -91,7 +91,40 @@ int main()
 
 void preOrderIterative(BSTNode *root)
 {
-	 /* add your code here */
+    Stack s;
+    s.top = NULL;
+
+    // // 필요하다면 시작 시 스택 비우기(여기선 지역 스택이라 의미상 넣어둠)
+    // while (pop(&s) != NULL) { }   // pop은 비었으면 NULL 반환
+
+	//첨엔 입력받은 root 그대로 사용하려고 했는데, 원본 값이 변경되기 때문에 재사용성을 고려해 포인터 만들어서 사용
+    BSTNode *cur = root;
+
+    while (cur != NULL || !isEmpty(&s)) {
+		while (cur != NULL) {
+			printf("%d ", cur->item);
+            push(&s, cur);
+            cur = cur->left;
+        }
+        cur = pop(&s);
+        cur = cur->right;
+    }
+}
+
+//
+void preOrderIterative(BSTNode *root)
+{
+    Stack s;
+	s.top = NULL;
+    if (!root) return;
+
+    push(&s, root);
+    while (!isEmpty(&s)) {
+        BSTNode *node = pop(&s);
+        printf("%d ", node->item);
+        if (node->right) push(&s, node->right); // 나중에 방문
+        if (node->left)  push(&s, node->left);  // 먼저 방문
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////

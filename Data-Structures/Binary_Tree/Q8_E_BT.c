@@ -79,6 +79,7 @@ int main()
             case 2:
                 printf("\nThe values stored in all nodes of the tree that has at least one great-grandchild are: ");
                 hasGreatGrandchild(root);
+                printf("\n");
                 removeAll(&root);
                 break;
             case 0:
@@ -100,9 +101,16 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-int hasGreatGrandchild(BTNode *node)
-{
-	/* add your code here */
+// 좌,우 자식 노드 정보부터 알아야하니 후위순회
+int hasGreatGrandchild(BTNode *node) {
+    if (!node) return 0; // 빈 노드 검증
+
+    int lh = hasGreatGrandchild(node->left);
+    int rh = hasGreatGrandchild(node->right);
+
+    if (lh >= 3 || rh >= 3) printf("%d ", node->item);
+    
+    return (lh > rh ? lh : rh) + 1;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
